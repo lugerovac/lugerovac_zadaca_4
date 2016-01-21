@@ -22,12 +22,29 @@ namespace lugerovac_zadaca_4
                 argumentHolder = value;
             }
         }
-        public bool MainThreadRuns { get; set; }
-
+        private bool mainThreadRuns = false;
+        public bool MainThreadRuns
+        {
+            get
+            {
+                return mainThreadRuns;
+            }
+            set
+            {
+                mainThreadRuns = value;
+                if(!mainThreadRuns)
+                {
+                    ThreadHandler threadHandler = ThreadHandler.GetInstance();
+                    threadHandler.AbortAllThreads();
+                }
+            }
+        }
+        public int AutomobileThreadCounter;
+        
         protected GlobalParameters()
         {
             argumentHolder = new ArgumentHolder();
-            MainThreadRuns = false;
+            AutomobileThreadCounter = 0;
         }
 
         public static GlobalParameters GetInstance()

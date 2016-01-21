@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace lugerovac_zadaca_4
@@ -10,18 +11,44 @@ namespace lugerovac_zadaca_4
     {
         public void Start()
         {
-            GlobalParameters gp = GlobalParameters.GetInstance();
-            gp.MainThreadRuns = true;
+            GlobalParameters globalParameters = GlobalParameters.GetInstance();
+            globalParameters.MainThreadRuns = true;
             while(true)
             {
-                if (!gp.MainThreadRuns)
+                if (!globalParameters.MainThreadRuns)
                     continue;
 
-                Console.WriteLine("\nUpiši Q za prekid programa: ");
+                StartCarGeneratingThread();
+
+                PrintMainMenu();
                 string userInput = Console.ReadLine();
                 if (string.Equals(userInput.ToUpper(), "Q"))
-                    gp.MainThreadRuns = false;
+                    globalParameters.MainThreadRuns = false;
             }
+        }
+
+        private void StartCarGeneratingThread()
+        {
+            CarGeneratingThread generator = new CarGeneratingThread();
+            Thread generatorThread = new Thread(new ThreadStart(generator.Start));
+            generatorThread.Name = "Car Generator Thread";
+            ThreadHandler threadHandler = ThreadHandler.GetInstance();
+            threadHandler.StartThread(generatorThread);
+        }
+
+        private void PrintMainMenu()
+        {
+            Console.WriteLine();
+            Console.WriteLine("1 - Zatvaranje parkirališta za nove ulaze automobila");
+            Console.WriteLine("2 - Otvaranje parkirališta za nove ulaze automobila");
+            Console.WriteLine("3 - Ispis zarada od parkiranja po zonama");
+            Console.WriteLine("4 - Ispis zarada od kazni po zonama");
+            Console.WriteLine("5 - Ispis broja automobila koji nisu mogli parkirati po zonama");
+            Console.WriteLine("6 - Ispis broja automobila koji je pauk odveo na deponij po zonama");
+            Console.WriteLine("7 - Ispis 5 automobila s najviše parkiranja");
+            Console.WriteLine("8 - Stanje parkirnih mjesta po zonama (% zauzetih)");
+            Console.WriteLine("Q - Prekid rada programa.");
+            Console.Write("\nVaš unos: ");
         }
     }
 }

@@ -66,6 +66,9 @@ namespace lugerovac_zadaca_4
                 }
             }
 
+            Console.Clear();
+            ViewerCache viewerCache = ViewerCache.GetInstance();
+            viewerCache.PrintCache();
             return true;
         }
     }

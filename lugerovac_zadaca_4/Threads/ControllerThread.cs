@@ -11,17 +11,20 @@ namespace lugerovac_zadaca_4
         public void Start()
         {
             GlobalParameters globalParameters = GlobalParameters.GetInstance();
-            while (!globalParameters.ControllerPriority) ;
+            while (true)
+            {
+                while (!Console.KeyAvailable) ;
+                ConsoleKey pressedKey = Console.ReadKey(true).Key;
 
-            string userInput = Console.ReadLine();
-            CheckUserInput(userInput);
+                CheckUserInput(pressedKey);
 
-            globalParameters.ViewerPriority = true;
+                globalParameters.ViewerPriority = true;
+            }
         }
 
-        private void CheckUserInput(string userInput)
+        private void CheckUserInput(ConsoleKey userInput)
         {
-            if (string.Equals(userInput.ToUpper(), "Q"))
+            if(userInput == ConsoleKey.Q)
             {
                 GlobalParameters globalParameters = GlobalParameters.GetInstance();
                 globalParameters.MainThreadRuns = false;

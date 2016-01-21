@@ -6,6 +6,7 @@ namespace lugerovac_zadaca_4
     {
         static void Main(string[] args)
         {
+            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             if (!MainFacade.InitializeArguments(args))
             {
@@ -18,6 +19,8 @@ namespace lugerovac_zadaca_4
                 Console.WriteLine("Došlo je do pogreške tjekom rada aplikacije!");
                 return;
             }
+
+            Console.ReadKey(true);
         }
     }
 }

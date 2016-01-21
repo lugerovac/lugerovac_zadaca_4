@@ -17,8 +17,6 @@ namespace lugerovac_zadaca_4
                 ConsoleKey pressedKey = Console.ReadKey(true).Key;
 
                 CheckUserInput(pressedKey);
-
-                globalParameters.ViewerPriority = true;
             }
         }
 

@@ -17,15 +17,9 @@ namespace lugerovac_zadaca_4
                 Console.Clear();
                 PrintCache();
                 PrintMainMenu();
-                globalParameters.ControllerPriority = true;
+                ViewerCache cache = ViewerCache.GetInstance();
 
-                while (!globalParameters.ViewerPriority)
-                {
-                    ViewerCache cache = ViewerCache.GetInstance();
-                    if (cache.Updated)
-                        globalParameters.ViewerPriority = true;
-                    Thread.Sleep(30);
-                }
+                while (!cache.Updated) ;
             }
         }
 

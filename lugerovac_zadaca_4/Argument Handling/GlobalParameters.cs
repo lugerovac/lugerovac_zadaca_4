@@ -40,40 +40,11 @@ namespace lugerovac_zadaca_4
             }
         }
         public int AutomobileThreadCounter;
-
-        private bool viewerPriority;
-        public bool ViewerPriority
-        {
-            get
-            {
-                return viewerPriority;
-            }
-            set
-            {
-                viewerPriority = value;
-                controllerPriority = !viewerPriority;
-            }
-        }
-
-        private bool controllerPriority;
-        public bool ControllerPriority
-        {
-            get
-            {
-                return controllerPriority;
-            }
-            set
-            {
-                controllerPriority = value;
-                viewerPriority = !controllerPriority;
-            }
-        }
         
         protected GlobalParameters()
         {
             argumentHolder = new ArgumentHolder();
             AutomobileThreadCounter = 0;
-            ViewerPriority = true;
         }
 
         public static GlobalParameters GetInstance()

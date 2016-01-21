@@ -32,7 +32,7 @@ namespace lugerovac_zadaca_4
 
         public void Add(string text)
         {
-            while(Updated || busy)
+            while(busy)
             {
                 Thread.Sleep(10);
             }

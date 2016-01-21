@@ -46,9 +46,14 @@
     <Compile Include="Argument Handling\ArgumentHolder.cs" />
     <Compile Include="Argument Handling\ArgumentReader.cs" />
     <Compile Include="Argument Handling\GlobalParameters.cs" />
+    <Compile Include="Parking\CarProvider.cs" />
+    <Compile Include="Parking\AutomobileThread.cs" />
+    <Compile Include="Parking\Automobile.cs" />
     <Compile Include="MainFacade.cs" />
+    <Compile Include="Parking\Parking.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Parking\Zone.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

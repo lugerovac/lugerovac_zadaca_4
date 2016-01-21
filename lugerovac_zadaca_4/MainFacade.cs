@@ -41,5 +41,16 @@ namespace lugerovac_zadaca_4
             Console.WriteLine("Interval kontrole: " + arguments.ArgumentHolder.ControlInterval);
             Console.WriteLine("Kazna parkiranja: " + arguments.ArgumentHolder.ParkingFine);
         }
+
+        public static bool StartApp()
+        {
+            GlobalParameters ah = GlobalParameters.GetInstance();
+            ArgumentHolder arguments = ah.ArgumentHolder;
+            Parking parking = Parking.GetInstance();
+            parking.InitializeZones(arguments.ZoneNumber, arguments.ZoneCapacity, arguments.MaxParkings, arguments.TimeUnit);
+
+
+            return true;
+        }
     }
 }

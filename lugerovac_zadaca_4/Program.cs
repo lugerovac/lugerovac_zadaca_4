@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace lugerovac_zadaca_4
 {
@@ -14,6 +10,12 @@ namespace lugerovac_zadaca_4
             if (!MainFacade.InitializeArguments(args))
             {
                 Console.WriteLine("Došlo je do pogreške kod čitanja argumenata! Program se prekida!");
+                return;
+            }
+
+            if(!MainFacade.StartApp())
+            {
+                Console.WriteLine("Došlo je do pogreške tjekom rada aplikacije!");
                 return;
             }
         }

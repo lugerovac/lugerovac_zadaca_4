@@ -53,8 +53,6 @@ namespace lugerovac_zadaca_4
             MainThread mainThreadReference = new MainThread();
             Thread mainThread = new Thread(new ThreadStart(mainThreadReference.Start));
             mainThread.Name = "Main Thread";
-            /*ThreadHandler threadHandler = ThreadHandler.GetInstance();
-            threadHandler.StartThread(mainThread);*/
             mainThread.Start();
             
             while (!mainThread.IsAlive) ;

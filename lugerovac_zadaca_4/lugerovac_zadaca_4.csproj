@@ -46,6 +46,7 @@
     <Compile Include="Argument Handling\ArgumentHolder.cs" />
     <Compile Include="Argument Handling\ArgumentReader.cs" />
     <Compile Include="Argument Handling\GlobalParameters.cs" />
+    <Compile Include="Threads\ControllerThread.cs" />
     <Compile Include="Threads\ThreadHandler.cs" />
     <Compile Include="Utilities\Randomizer.cs" />
     <Compile Include="Threads\CarGeneratingThread.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Parking\Zone.cs" />
+    <Compile Include="Threads\ViewThread.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

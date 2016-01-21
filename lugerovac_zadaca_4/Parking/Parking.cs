@@ -27,7 +27,7 @@ namespace lugerovac_zadaca_4
             zones = new Zone[numberOfZones];
             for(int i = 1; i <= numberOfZones; i++)
             {
-                zones[i] = new Zone(i, zoneCapacity, parkingTime, timeUnit);
+                zones[i-1] = new Zone(i, zoneCapacity, parkingTime, timeUnit);
             }
         }
     }

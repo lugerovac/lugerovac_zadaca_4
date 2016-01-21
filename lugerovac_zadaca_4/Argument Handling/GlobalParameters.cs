@@ -22,10 +22,12 @@ namespace lugerovac_zadaca_4
                 argumentHolder = value;
             }
         }
+        public bool MainThreadRuns { get; set; }
 
         protected GlobalParameters()
         {
             argumentHolder = new ArgumentHolder();
+            MainThreadRuns = false;
         }
 
         public static GlobalParameters GetInstance()

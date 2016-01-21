@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace lugerovac_zadaca_4
@@ -44,11 +45,24 @@ namespace lugerovac_zadaca_4
 
         public static bool StartApp()
         {
-            GlobalParameters ah = GlobalParameters.GetInstance();
-            ArgumentHolder arguments = ah.ArgumentHolder;
+            GlobalParameters globalParameters = GlobalParameters.GetInstance();
+            ArgumentHolder arguments = globalParameters.ArgumentHolder;
             Parking parking = Parking.GetInstance();
             parking.InitializeZones(arguments.ZoneNumber, arguments.ZoneCapacity, arguments.MaxParkings, arguments.TimeUnit);
 
+            MainThread mainThreadReference = new MainThread();
+            Thread mainThread = new Thread(new ThreadStart(mainThreadReference.Start));
+            mainThread.Start();
+            while (!mainThread.IsAlive) ;
+            while(true)
+            {
+                Thread.Sleep(500);
+                if (!globalParameters.MainThreadRuns)
+                {
+                    mainThread.Abort();
+                    break;
+                }
+            }
 
             return true;
         }

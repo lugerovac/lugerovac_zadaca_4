@@ -84,6 +84,31 @@ namespace lugerovac_zadaca_4
             monitor.Release();
         }
 
+        public void Conscificate(Zone zone, Automobile car, int fine)
+        {
+            monitor.Check();
+            GlobalParameters globalParameters = GlobalParameters.GetInstance();
+            int currentTime = globalParameters.Timer;
+            ParkingReservation reservation = FindReservation(zone, car);
+            car.Conscificate(fine);
+            zone.Remove(car);
+            reservations.Remove(reservation);
+            ViewerCache viewerCache = ViewerCache.GetInstance();
+            viewerCache.Add(currentTime.ToString() + ": Automobil " + car.ID.ToString() + " u zoni " + zone.ID.ToString() 
+                + " je conscificiran a vlasniku je data kazna u vrijednosti od " + fine.ToString() + " HRK");
+            monitor.Release();
+        }
+
+        private ParkingReservation FindReservation(Zone zone, Automobile car)
+        {
+            foreach(ParkingReservation reservation in reservations)
+            {
+                if (reservation.Zone == zone && reservation.Car == car)
+                    return reservation;
+            }
+            return null;
+        }
+
         public void ExtendReservation(ParkingReservation reservation)
         {
             monitor.Check();
@@ -127,6 +152,13 @@ namespace lugerovac_zadaca_4
             monitor.Release();
         }
 
+        public void RemoveReservation(ParkingReservation reservation)
+        {
+            monitor.Check();
+            reservations.Remove(reservation);
+            monitor.Release();
+        }
+
         public void MoveFirstToEnd()
         {
             monitor.Check();
@@ -135,6 +167,7 @@ namespace lugerovac_zadaca_4
             ParkingReservation reservation = reservations.First();
             reservations.Remove(reservation);
             reservations.Add(reservation);
+            reservation.Car.IllegalExtensions++;
             ViewerCache viewerCache = ViewerCache.GetInstance();
             viewerCache.Add(currentTime.ToString() + ": Vlasnik automobila " + reservation.Car.ID.ToString() + " ostavlja automobil u zoni " + reservation.Zone.ID.ToString() + " bez legalnog produljenja");
             monitor.Release();

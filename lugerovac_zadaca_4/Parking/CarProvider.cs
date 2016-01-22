@@ -45,7 +45,7 @@ namespace lugerovac_zadaca_4
                     cars[i] = new Automobile(i);
                     return cars[i];
                 }
-                if (!cars[i].IsParked())
+                if (!cars[i].IsParked() && !cars[i].Conscificated)
                     return cars[i];
                 if (i == limit)
                     break;

@@ -8,7 +8,14 @@ namespace lugerovac_zadaca_4
 {
     public class Zone
     {
-        List<Automobile> cars;
+        private List<Automobile> cars;
+        public List<Automobile> Cars
+        {
+            get
+            {
+                return cars;
+            }
+        }
         private int id;
         public int ID
         {

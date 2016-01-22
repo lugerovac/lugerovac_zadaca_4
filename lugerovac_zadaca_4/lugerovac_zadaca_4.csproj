@@ -46,6 +46,7 @@
     <Compile Include="Argument Handling\ArgumentHolder.cs" />
     <Compile Include="Argument Handling\ArgumentReader.cs" />
     <Compile Include="Argument Handling\GlobalParameters.cs" />
+    <Compile Include="Threads\ParkingControlerThread.cs" />
     <Compile Include="Parking\CarProvider.cs" />
     <Compile Include="Threads\OwnersThread.cs" />
     <Compile Include="Parking\ParkingReservation.cs" />

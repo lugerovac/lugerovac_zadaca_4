@@ -15,10 +15,12 @@ namespace lugerovac_zadaca_4
             globalParameters.MainThreadRuns = true;
             StartViewThread();
             StartControllerThread();
-            Thread.Sleep(10);
+            Thread.Sleep(100);
             StartCarGeneratingThread();
-            Thread.Sleep(10);
+            Thread.Sleep(100);
             StartOwnerThread();
+            Thread.Sleep(100);
+            StartParkingControler();
 
             while (true)
             {
@@ -66,6 +68,16 @@ namespace lugerovac_zadaca_4
             ThreadHandler threadHandler = ThreadHandler.GetInstance();
             threadHandler.StartThread(ownerThread);
             while (!ownerThread.IsAlive) ;
+        }
+
+        private void StartParkingControler()
+        {
+            ParkingControlerThread parkingControler = new ParkingControlerThread();
+            Thread parkingControlerThread = new Thread(new ThreadStart(parkingControler.Start));
+            parkingControlerThread.Name = "Owners Thread";
+            ThreadHandler threadHandler = ThreadHandler.GetInstance();
+            threadHandler.StartThread(parkingControlerThread);
+            while (!parkingControlerThread.IsAlive) ;
         }
     }
 }

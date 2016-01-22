@@ -12,10 +12,12 @@ namespace lugerovac_zadaca_4
         private static Parking instance;
         private Monitor monitor;
         private Zone[] zones;
+        private List<ParkingReservation> reservations;
 
         protected Parking()
         {
             monitor = new Monitor();
+            reservations = new List<ParkingReservation>();
         }
 
         public static Parking GetInstance()
@@ -54,16 +56,88 @@ namespace lugerovac_zadaca_4
             else
             {
                 GlobalParameters globalParameters = GlobalParameters.GetInstance();
+                int currentTime = globalParameters.Timer;
+                ParkingReservation newReservation = new ParkingReservation(car, zone, currentTime);
+                reservations.Add(newReservation);
                 zone.Add(car);
                 int parkingBill = (zones.Length + 1 - zone.ID) * globalParameters.ArgumentHolder.UnitPrice;
                 car.AddParkingBill(parkingBill);
                 ViewerCache viewerCache = ViewerCache.GetInstance();
-                viewerCache.Add(globalParameters.Timer.ToString() + ": Naplaćeno parkiranje u zoni " + zone.ID.ToString() + " automobilu " + car.ID.ToString() + " u iznosu od " + parkingBill.ToString() + " HRK");
+                viewerCache.Add(currentTime.ToString() + ": Naplaćeno parkiranje u zoni " + zone.ID.ToString() + " automobilu " + car.ID.ToString() + " u iznosu od " + parkingBill.ToString() + " HRK");
                 returnValue = true;
             }
 
             monitor.Release();
             return returnValue;
+        }
+
+        public void Leave(ParkingReservation reservation)
+        {
+            monitor.Check();
+            GlobalParameters globalParameters = GlobalParameters.GetInstance();
+            int currentTime = globalParameters.Timer;
+            reservation.Car.Leave();
+            reservation.Zone.Remove(reservation.Car);
+            reservations.Remove(reservation);
+            ViewerCache viewerCache = ViewerCache.GetInstance();
+            viewerCache.Add(currentTime.ToString() + ": Automobil " + reservation.Car.ID.ToString() + " napušta zonu " + reservation.Zone.ID.ToString());
+            monitor.Release();
+        }
+
+        public void ExtendReservation(ParkingReservation reservation)
+        {
+            monitor.Check();
+            GlobalParameters globalParameters = GlobalParameters.GetInstance();
+            int currentTime = globalParameters.Timer;
+            ViewerCache viewerCache = ViewerCache.GetInstance();
+            if (reservation.Car.Extensions < reservation.Zone.MaxExtensions)
+            {
+                int parkingBill = (zones.Length + 1 - reservation.Zone.ID) * globalParameters.ArgumentHolder.UnitPrice;
+                reservation.Car.AddParkingBill(parkingBill);
+                reservation.Car.Extensions++;
+                viewerCache.Add(currentTime.ToString() + ": Vlasnik automobila " + reservation.Car.ID.ToString() + " je produljio parkiranje u zoni "
+                    + reservation.Zone.ID.ToString() + " i platio " + parkingBill.ToString() + " HRK");
+                monitor.Release();
+            } else
+            {
+                viewerCache.Add(currentTime.ToString() + ": Vlasniku automobila " + reservation.Car.ID.ToString() + ", parkiranog u zoni " 
+                    + reservation.Zone.ID.ToString() + " odbijeno je produljenje");
+                monitor.Release();
+                Leave(reservation);
+            }
+            
+        }
+
+        public ParkingReservation GetFirstReservation()
+        {
+            monitor.Check();
+            ParkingReservation returnValue;
+            if (reservations.Count == 0)
+                returnValue = null;
+            else
+                returnValue = reservations.First();
+            monitor.Release();
+            return returnValue;
+        }
+
+        public void RemoveFirstReservation()
+        {
+            monitor.Check();
+            reservations.Remove(reservations.First());
+            monitor.Release();
+        }
+
+        public void MoveFirstToEnd()
+        {
+            monitor.Check();
+            GlobalParameters globalParameters = GlobalParameters.GetInstance();
+            int currentTime = globalParameters.Timer;
+            ParkingReservation reservation = reservations.First();
+            reservations.Remove(reservation);
+            reservations.Add(reservation);
+            ViewerCache viewerCache = ViewerCache.GetInstance();
+            viewerCache.Add(currentTime.ToString() + ": Vlasnik automobila " + reservation.Car.ID.ToString() + " ostavlja automobil u zoni " + reservation.Zone.ID.ToString() + " bez legalnog produljenja");
+            monitor.Release();
         }
     }
 }

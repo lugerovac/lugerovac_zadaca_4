@@ -57,7 +57,7 @@ namespace lugerovac_zadaca_4
         {
             argumentHolder = new ArgumentHolder();
             AutomobileThreadCounter = 0;
-            timer = 0;
+            timer = 1;
         }
 
         public static GlobalParameters GetInstance()

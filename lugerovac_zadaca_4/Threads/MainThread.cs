@@ -17,6 +17,8 @@ namespace lugerovac_zadaca_4
             StartControllerThread();
             Thread.Sleep(10);
             StartCarGeneratingThread();
+            Thread.Sleep(10);
+            StartOwnerThread();
 
             while (true)
             {
@@ -54,6 +56,16 @@ namespace lugerovac_zadaca_4
             ThreadHandler threadHandler = ThreadHandler.GetInstance();
             threadHandler.StartThread(generatorThread);
             while(!generatorThread.IsAlive);
+        }
+
+        private void StartOwnerThread()
+        {
+            OwnersThread owner = new OwnersThread();
+            Thread ownerThread = new Thread(new ThreadStart(owner.Start));
+            ownerThread.Name = "Owners Thread";
+            ThreadHandler threadHandler = ThreadHandler.GetInstance();
+            threadHandler.StartThread(ownerThread);
+            while (!ownerThread.IsAlive) ;
         }
     }
 }

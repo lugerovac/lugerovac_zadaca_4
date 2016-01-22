@@ -9,25 +9,13 @@ namespace lugerovac_zadaca_4
 {
     public class CarGeneratingThread
     {
-        private Automobile[] cars;
-        private int numberOfCars;
         Randomizer rnd;
+        CarProvider carProvider;
 
         public CarGeneratingThread()
         {
-            GlobalParameters gp = GlobalParameters.GetInstance();
             rnd = Randomizer.GetInstance();
-            numberOfCars = gp.ArgumentHolder.CarNumber;
-            cars = new Automobile[numberOfCars];
-            FillCars();
-        }
-
-        private void FillCars()
-        {
-            for(int i = 0; i < numberOfCars; i++)
-            {
-                cars[i] = new Automobile(i);
-            }
+            carProvider = CarProvider.GetInstance();
         }
 
         public void Start()
@@ -35,7 +23,7 @@ namespace lugerovac_zadaca_4
             while(true)
             {
                 Sleep();
-                Automobile car = getRandomCar();
+                Automobile car = carProvider.GiveFreeCar();
                 if (car == null)
                     continue;
 
@@ -54,26 +42,7 @@ namespace lugerovac_zadaca_4
             }
         }
 
-        private Automobile getRandomCar()
-        {
-            int random = rnd.GetValue(0, numberOfCars - 1);
-            int i = random;
-            int limit = random - 1;
-            if (limit < 0)
-                limit = numberOfCars - 1;
-
-            for(; ; i++)
-            {
-                if (i == cars.Length)
-                    i = 0;
-                if (!cars[i].IsParked())
-                    return cars[i];
-                if (i == limit)
-                    break;
-            }
-
-            return null;
-        }
+        
 
         private void Sleep()
         {

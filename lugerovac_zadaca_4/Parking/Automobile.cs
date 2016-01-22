@@ -18,12 +18,25 @@ namespace lugerovac_zadaca_4
         }
         private List<int> parkingBills;
         private bool parked;
+        private int extensions;
+        public int Extensions
+        {
+            get
+            {
+                return extensions;
+            }
+            set
+            {
+                extensions = value;
+            }
+        }
 
         public Automobile(int id)
         {
             this.id = id;
             parkingBills = new List<int>();
             parked = false;
+            extensions = 0;
         }
 
         public void AddParkingBill(int amount)
@@ -39,6 +52,7 @@ namespace lugerovac_zadaca_4
         public void Leave()
         {
             parked = false;
+            extensions = 0;
         }
 
         public bool IsParked()

@@ -19,6 +19,14 @@ namespace lugerovac_zadaca_4
         }
         private int parkingTime;
         private int capacity;
+        private int maxExtensions;
+        public int MaxExtensions
+        {
+            get
+            {
+                return maxExtensions;
+            }
+        }
 
         public Zone(int id, int capacity, int parkingTime, int timeUnit)
         {
@@ -26,6 +34,7 @@ namespace lugerovac_zadaca_4
             this.id = id;
             this.capacity = id * capacity;
             this.parkingTime = id * parkingTime * timeUnit;
+            maxExtensions = id - 1;
         }
 
         public bool IsFull()

@@ -8,17 +8,35 @@ namespace lugerovac_zadaca_4
 {
     public class Zone
     {
-        List<Automobile> automobiles;
+        List<Automobile> cars;
         private int id;
-        private int capacity;
         private int parkingTime;
+        private int capacity;
 
         public Zone(int id, int capacity, int parkingTime, int timeUnit)
         {
-            automobiles = new List<Automobile>();
+            cars = new List<Automobile>();
             this.id = id;
             this.capacity = id * capacity;
             this.parkingTime = id * parkingTime * timeUnit;
+        }
+
+        public bool IsFull()
+        {
+            if (cars.Count == capacity)
+                return true;
+            else
+                return false;
+        }
+
+        public void Add(Automobile car)
+        {
+            cars.Add(car);
+        }
+
+        public void Remove(Automobile car)
+        {
+            cars.Remove(car);
         }
     }
 }

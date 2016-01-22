@@ -19,7 +19,12 @@ namespace lugerovac_zadaca_4
                 PrintMainMenu();
                 ViewerCache cache = ViewerCache.GetInstance();
 
-                while (!cache.Updated) ;
+                while (!cache.Updated)
+                {
+                    Randomizer randomizer = Randomizer.GetInstance();
+                    int rnd = randomizer.GetValue(5, 50);
+                    Thread.Sleep(rnd);
+                }
             }
         }
 

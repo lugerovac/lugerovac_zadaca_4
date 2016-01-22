@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace lugerovac_zadaca_4
@@ -9,10 +10,12 @@ namespace lugerovac_zadaca_4
     public class Parking
     {
         private static Parking instance;
+        private Monitor monitor;
         private Zone[] zones;
 
         protected Parking()
         {
+            monitor = new Monitor();
         }
 
         public static Parking GetInstance()
@@ -29,6 +32,28 @@ namespace lugerovac_zadaca_4
             {
                 zones[i-1] = new Zone(i, zoneCapacity, parkingTime, timeUnit);
             }
+        }
+
+        public Zone[] GetParkingZones()
+        {
+            return zones;
+        }
+
+        public bool ReservePlaceInZone(Automobile car, Zone zone)
+        {
+            monitor.Check();
+
+            bool returnValue;
+            if (zone.IsFull())
+                returnValue = false;
+            else
+            {
+                zone.Add(car);
+                returnValue = true;
+            }
+
+            monitor.Release();
+            return returnValue;
         }
     }
 }

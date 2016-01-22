@@ -11,16 +11,16 @@ namespace lugerovac_zadaca_4
     {
         private string[] cache;
         private int indexer;
+        private Monitor monitor;
         public bool Updated;
-        private bool busy;
 
         private static ViewerCache instance;
         protected ViewerCache()
         {
+            monitor = new Monitor();
             cache = new string[10];
             Updated = false;
             indexer = 0;
-            busy = false;
         }
 
         public static ViewerCache GetInstance()
@@ -32,23 +32,20 @@ namespace lugerovac_zadaca_4
 
         public void Add(string text)
         {
-            while(busy)
-            {
-                Thread.Sleep(10);
-            }
-
-            busy = true;
+            monitor.Check();
 
             cache[indexer++] = text;
             if (indexer == cache.Length)
                 indexer = 0;
             Updated = true;
-            busy = false;
+
+            monitor.Release();
         }
 
         public void PrintCache()
         {
-            busy = true;
+            monitor.Check();
+
             int i = indexer;
             int limit = i - 1;
             if (limit < 0)
@@ -62,7 +59,13 @@ namespace lugerovac_zadaca_4
                 if (i == limit)
                     break;
             }
-            busy = false;
+
+            monitor.Release();
+        }
+
+        public string[] GetCache()
+        {
+            return cache;
         }
     }
 }

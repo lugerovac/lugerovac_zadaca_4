@@ -10,6 +10,13 @@ namespace lugerovac_zadaca_4
     {
         List<Automobile> cars;
         private int id;
+        public int ID
+        {
+            get
+            {
+                return id;
+            }
+        }
         private int parkingTime;
         private int capacity;
 

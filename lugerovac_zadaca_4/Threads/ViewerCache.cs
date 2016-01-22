@@ -18,7 +18,8 @@ namespace lugerovac_zadaca_4
         protected ViewerCache()
         {
             monitor = new Monitor();
-            cache = new string[10];
+            int cacheSize = Console.WindowHeight - 20;
+            cache = new string[cacheSize];
             Updated = false;
             indexer = 0;
         }

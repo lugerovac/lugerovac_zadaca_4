@@ -40,11 +40,24 @@ namespace lugerovac_zadaca_4
             }
         }
         public int AutomobileThreadCounter;
+        private int timer;
+        public int Timer
+        {
+            get
+            {
+                return timer;
+            }
+            set
+            {
+                timer = value;
+            }
+        }
         
         protected GlobalParameters()
         {
             argumentHolder = new ArgumentHolder();
             AutomobileThreadCounter = 0;
+            timer = 0;
         }
 
         public static GlobalParameters GetInstance()

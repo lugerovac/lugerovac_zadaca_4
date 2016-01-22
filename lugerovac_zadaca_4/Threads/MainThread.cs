@@ -13,6 +13,7 @@ namespace lugerovac_zadaca_4
         {
             GlobalParameters globalParameters = GlobalParameters.GetInstance();
             globalParameters.MainThreadRuns = true;
+            StartTimerThread();
             StartviewThread();
             StartControllerThread();
             StartCarGeneratingThread();
@@ -22,6 +23,15 @@ namespace lugerovac_zadaca_4
                 if (!globalParameters.MainThreadRuns)
                     continue;
             }
+        }
+
+        private void StartTimerThread()
+        {
+            TimerThread timer = new TimerThread();
+            Thread timerThread = new Thread(new ThreadStart(timer.Start));
+            timerThread.Name = "Timer Thread";
+            ThreadHandler threadHandler = ThreadHandler.GetInstance();
+            threadHandler.StartThread(timerThread);
         }
 
         private void StartviewThread()

@@ -45,10 +45,20 @@ namespace lugerovac_zadaca_4
 
             bool returnValue;
             if (zone.IsFull())
+            {
+                GlobalParameters globalParameters = GlobalParameters.GetInstance();
+                ViewerCache viewerCache = ViewerCache.GetInstance();
+                viewerCache.Add(globalParameters.Timer.ToString() + ": Automobilu " + car.ID + " odbijeno parkiranje u zoni " + zone.ID.ToString() + " jer nije bilo prostora");
                 returnValue = false;
+            }
             else
             {
+                GlobalParameters globalParameters = GlobalParameters.GetInstance();
                 zone.Add(car);
+                int parkingBill = (zones.Length + 1 - zone.ID) * globalParameters.ArgumentHolder.UnitPrice;
+                car.AddParkingBill(parkingBill);
+                ViewerCache viewerCache = ViewerCache.GetInstance();
+                viewerCache.Add(globalParameters.Timer.ToString() + ": Naplaćeno parkiranje u zoni " + zone.ID.ToString() + " automobilu " + car.ID.ToString() + " u iznosu od " + parkingBill.ToString() + " HRK");
                 returnValue = true;
             }
 

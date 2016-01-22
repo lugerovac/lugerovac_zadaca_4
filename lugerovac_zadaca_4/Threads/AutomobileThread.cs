@@ -22,25 +22,31 @@ namespace lugerovac_zadaca_4
 
         public void Start()
         {
-            Parking parking = Parking.GetInstance();
-            Zone[] AvailableZones = parking.GetParkingZones();
-
-            Randomizer randomizer = Randomizer.GetInstance();
-            int rnd2 = randomizer.GetValue(0, AvailableZones.Length - 1);
-            //int chosenZone = (AvailableZones.Length * rnd2);
-            int chosenZone = rnd2;
-
-            bool reserved = parking.ReservePlaceInZone(car, AvailableZones[chosenZone]);
-            ViewerCache viewerCache = ViewerCache.GetInstance();
-            if (reserved)
+            while (true)
             {
-                viewerCache.Add("Automobil " + id.ToString() + " se parkirao u zoni " + chosenZone.ToString());
-            }else
-            {
-                viewerCache.Add("Automobil " + id.ToString() + " se nije uspjeo parkirati u zoni " + chosenZone.ToString());
+                if (!car.IsParked())
+                {
+                    Parking parking = Parking.GetInstance();
+                    Zone[] AvailableZones = parking.GetParkingZones();
+
+                    Randomizer randomizer = Randomizer.GetInstance();
+                    int rnd2 = randomizer.GetValue(0, AvailableZones.Length - 1);
+                    //int chosenZone = (AvailableZones.Length * rnd2);
+                    int chosenZone = rnd2;
+
+                    bool reserved = parking.ReservePlaceInZone(car, AvailableZones[chosenZone]);
+                    ViewerCache viewerCache = ViewerCache.GetInstance();
+                    if (reserved)
+                    {
+                        car.Park();
+                    }
+                    else
+                    {
+                    }
+                }
+
+                GoToSleep();
             }
-
-            GoToSleep();
         }
 
         private void GoToSleep()
@@ -48,7 +54,7 @@ namespace lugerovac_zadaca_4
             GlobalParameters globalParameters = GlobalParameters.GetInstance();
             ArgumentHolder arguments = globalParameters.ArgumentHolder;
             Randomizer rnd = Randomizer.GetInstance();
-            Thread.Sleep((arguments.TimeUnit / arguments.IntervalOfArrivals) * rnd.GetValue(10, 300));
+            Thread.Sleep(((arguments.TimeUnit * 1000) / arguments.IntervalOfArrivals) * (rnd.GetValue(1, 20) / 10));
         }
     }
 }

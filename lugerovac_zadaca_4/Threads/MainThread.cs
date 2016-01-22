@@ -13,34 +13,27 @@ namespace lugerovac_zadaca_4
         {
             GlobalParameters globalParameters = GlobalParameters.GetInstance();
             globalParameters.MainThreadRuns = true;
-            StartTimerThread();
-            StartviewThread();
+            StartViewThread();
             StartControllerThread();
+            Thread.Sleep(10);
             StartCarGeneratingThread();
 
             while (true)
             {
                 if (!globalParameters.MainThreadRuns)
                     continue;
+                Thread.Sleep(500);
             }
         }
 
-        private void StartTimerThread()
-        {
-            TimerThread timer = new TimerThread();
-            Thread timerThread = new Thread(new ThreadStart(timer.Start));
-            timerThread.Name = "Timer Thread";
-            ThreadHandler threadHandler = ThreadHandler.GetInstance();
-            threadHandler.StartThread(timerThread);
-        }
-
-        private void StartviewThread()
+        private void StartViewThread()
         {
             ViewThread viewer = new ViewThread();
             Thread viewThread = new Thread(new ThreadStart(viewer.Start));
             viewThread.Name = "View Thread";
             ThreadHandler threadHandler = ThreadHandler.GetInstance();
             threadHandler.StartThread(viewThread);
+            while (!viewThread.IsAlive) ;
         }
 
         private void StartControllerThread()
@@ -50,6 +43,7 @@ namespace lugerovac_zadaca_4
             controllerThread.Name = "Controler Thread";
             ThreadHandler threadHandler = ThreadHandler.GetInstance();
             threadHandler.StartThread(controllerThread);
+            while (!controllerThread.IsAlive) ;
         }
 
         private void StartCarGeneratingThread()
@@ -59,6 +53,7 @@ namespace lugerovac_zadaca_4
             generatorThread.Name = "Car Generator Thread";
             ThreadHandler threadHandler = ThreadHandler.GetInstance();
             threadHandler.StartThread(generatorThread);
+            while(!generatorThread.IsAlive);
         }
     }
 }

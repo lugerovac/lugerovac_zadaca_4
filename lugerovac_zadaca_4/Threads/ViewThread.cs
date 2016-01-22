@@ -21,9 +21,7 @@ namespace lugerovac_zadaca_4
 
                 while (!cache.Updated)
                 {
-                    Randomizer randomizer = Randomizer.GetInstance();
-                    int rnd = randomizer.GetValue(5, 50);
-                    Thread.Sleep(rnd);
+                    Thread.Sleep(100);
                 }
             }
         }

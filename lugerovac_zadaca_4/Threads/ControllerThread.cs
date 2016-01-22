@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace lugerovac_zadaca_4
@@ -13,7 +14,10 @@ namespace lugerovac_zadaca_4
             GlobalParameters globalParameters = GlobalParameters.GetInstance();
             while (true)
             {
-                while (!Console.KeyAvailable) ;
+                while (!Console.KeyAvailable)
+                {
+                    Thread.Sleep(10);
+                }
                 ConsoleKey pressedKey = Console.ReadKey(true).Key;
 
                 CheckUserInput(pressedKey);

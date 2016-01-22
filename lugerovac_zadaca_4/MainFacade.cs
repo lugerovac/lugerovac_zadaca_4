@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -56,14 +57,20 @@ namespace lugerovac_zadaca_4
             mainThread.Start();
             
             while (!mainThread.IsAlive) ;
-            while(true)
+            Thread.Sleep(500);
+            while (true)
             {
-                Thread.Sleep(500);
                 if (!globalParameters.MainThreadRuns)
                 {
                     mainThread.Abort();
                     break;
                 }
+
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                globalParameters.Timer++;
+                sw.Stop();
+                Thread.Sleep(1000 - sw.Elapsed.Milliseconds);
             }
 
             Console.Clear();

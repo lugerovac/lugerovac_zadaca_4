@@ -46,7 +46,6 @@
     <Compile Include="Argument Handling\ArgumentHolder.cs" />
     <Compile Include="Argument Handling\ArgumentReader.cs" />
     <Compile Include="Argument Handling\GlobalParameters.cs" />
-    <Compile Include="Threads\TimerThread.cs" />
     <Compile Include="Utilities\Monitor.cs" />
     <Compile Include="Threads\ControllerThread.cs" />
     <Compile Include="Threads\ThreadHandler.cs" />
@@ -54,7 +53,6 @@
     <Compile Include="Threads\CarGeneratingThread.cs" />
     <Compile Include="Threads\MainThread.cs" />
     <Compile Include="Parking\CarProvider.cs" />
-    <Compile Include="Threads\AutomobileThread.cs" />
     <Compile Include="Parking\Automobile.cs" />
     <Compile Include="MainFacade.cs" />
     <Compile Include="Parking\Parking.cs" />

@@ -22,10 +22,15 @@ namespace lugerovac_zadaca_4
 
         public void Start()
         {
+            bool firstTime = true;
             while (true)
             {
                 if (!car.IsParked())
                 {
+                    if(!firstTime)
+                        GoToSleep();
+                    firstTime = false;
+
                     Parking parking = Parking.GetInstance();
                     Zone[] AvailableZones = parking.GetParkingZones();
 
@@ -44,8 +49,6 @@ namespace lugerovac_zadaca_4
                     {
                     }
                 }
-
-                GoToSleep();
             }
         }
 

@@ -27,17 +27,17 @@ namespace lugerovac_zadaca_4
                         continue;
 
                     ViewerCache viewerCache = ViewerCache.GetInstance();
-                    viewerCache.Add("Kontroler posjećuje zonu " + zone.ID.ToString());
+                    GlobalParameters gp = GlobalParameters.GetInstance();
+                    viewerCache.Add(gp.Timer.ToString() + ": Kontroler posjećuje zonu " + zone.ID.ToString());
 
                     CarIterator cIterator = new CarIterator(zone.Cars);
                     for(Automobile car = (Automobile)cIterator.First(); !cIterator.IsDone(); car = (Automobile)cIterator.Next())
                     {
                         if (car == null)
                             continue;
-                        viewerCache.Add("Kontroler pregledava auto " + car.ID.ToString());
+                        viewerCache.Add(gp.Timer.ToString() + ": Kontroler pregledava auto " + car.ID.ToString());
                         if (car.IllegalExtensions > 0)
                         {
-                            GlobalParameters gp = GlobalParameters.GetInstance();
                             ArgumentHolder arguments = gp.ArgumentHolder;
                             int fine = ((zIterator.Count() + 1 - zone.ID) * arguments.UnitPrice * arguments.ParkingFine);
                             parking.Conscificate(zone, car, fine);
@@ -89,7 +89,7 @@ namespace lugerovac_zadaca_4
 
         public override bool IsDone()
         {
-            return index >= cars.Count - 1;
+            return index >= cars.Count;
         }
 
         public override object Next()
@@ -97,7 +97,11 @@ namespace lugerovac_zadaca_4
             if (index < cars.Count - 1)
                 return cars[++index];
             else
-                return null;
+            {
+                index = 0;
+                if (cars.Count != 0) return cars[0];
+                else return null;
+            }
         }
 
         public override int Count()
@@ -129,15 +133,21 @@ namespace lugerovac_zadaca_4
 
         public override bool IsDone()
         {
-            return index >= zones.Length - 1;
+            return index >= zones.Length;
         }
 
         public override object Next()
         {
             if (index < zones.Length - 1)
+            {
                 return zones[++index];
+            }
             else
-                return null;
+            {
+                index = 0;
+                if (zones.Length != 0) return zones[0];
+                else return null;
+            }
         }
 
         public override int Count()

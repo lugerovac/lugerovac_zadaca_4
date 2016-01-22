@@ -17,6 +17,13 @@ namespace lugerovac_zadaca_4
             }
         }
         private List<int> parkingBills;
+        public List<int> ParkingBills
+        {
+            get
+            {
+                return parkingBills;
+            }
+        }
         private bool parked;
         private int extensions;
         public int Extensions

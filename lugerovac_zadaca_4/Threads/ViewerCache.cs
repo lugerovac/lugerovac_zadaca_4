@@ -10,7 +10,9 @@ namespace lugerovac_zadaca_4
     public class ViewerCache
     {
         private string[] cache;
+        private string[] reportCache;
         private int indexer;
+        private int reportIndexer;
         private Monitor monitor;
         public bool Updated;
 
@@ -18,10 +20,12 @@ namespace lugerovac_zadaca_4
         protected ViewerCache()
         {
             monitor = new Monitor();
-            int cacheSize = Console.WindowHeight - 20;
-            cache = new string[cacheSize];
+            int cacheSize = (Console.WindowHeight - 15)/2;
+            cache = new string[cacheSize + Math.Abs(cacheSize / 2)];
+            reportCache = new string[cacheSize - Math.Abs(cacheSize / 2)];
             Updated = false;
             indexer = 0;
+            reportIndexer = 0;
         }
 
         public static ViewerCache GetInstance()
@@ -38,6 +42,18 @@ namespace lugerovac_zadaca_4
             cache[indexer++] = text;
             if (indexer == cache.Length)
                 indexer = 0;
+            Updated = true;
+
+            monitor.Release();
+        }
+
+        public void AddReport(string text)
+        {
+            monitor.Check();
+
+            reportCache[reportIndexer++] = text;
+            if (reportIndexer == reportCache.Length)
+                reportIndexer = 0;
             Updated = true;
 
             monitor.Release();
@@ -61,7 +77,28 @@ namespace lugerovac_zadaca_4
                     break;
             }
 
+            Console.WriteLine("--------------------------------------------------------------");
+
+            i = reportIndexer;
+            limit = i - 1;
+            if (limit < 0)
+                limit = reportCache.Length - 1;
+
+            for (; ; i++)
+            {
+                if (i == reportCache.Length)
+                    i = 0;
+                Console.WriteLine(reportCache[i]);
+                if (i == limit)
+                    break;
+            }
+
             monitor.Release();
+        }
+
+        private void PrintReportCache()
+        {
+
         }
 
         public string[] GetCache()

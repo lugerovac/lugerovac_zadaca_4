@@ -50,7 +50,7 @@ namespace lugerovac_zadaca_4
         {
             GlobalParameters globalParameters = GlobalParameters.GetInstance();
             ArgumentHolder arguments = globalParameters.ArgumentHolder;
-            Thread.Sleep(((arguments.TimeUnit * 1000) / arguments.IntervalOfDepartures) * (rnd.GetValue(1, 15) / 10));
+            Thread.Sleep(((arguments.TimeUnit * 1000) / arguments.IntervalOfDepartures) * (rnd.GetValue(1, 30) / 10));
         }
     }
 }

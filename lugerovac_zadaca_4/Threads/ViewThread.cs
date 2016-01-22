@@ -35,7 +35,7 @@ namespace lugerovac_zadaca_4
 
         private void PrintMainMenu()
         {
-            Console.WriteLine();
+            Console.WriteLine("--------------------------------------------------------------");
             Console.WriteLine("1 - Zatvaranje parkirališta za nove ulaze automobila");
             Console.WriteLine("2 - Otvaranje parkirališta za nove ulaze automobila");
             Console.WriteLine("3 - Ispis zarada od parkiranja po zonama");

@@ -26,12 +26,67 @@ namespace lugerovac_zadaca_4
         }
         private int parkingTime;
         private int capacity;
+        public int Capacity
+        {
+            get
+            {
+                return capacity;
+            }
+        }
         private int maxExtensions;
         public int MaxExtensions
         {
             get
             {
                 return maxExtensions;
+            }
+        }
+        private int profit;
+        public int Profit
+        {
+            get
+            {
+                return profit;
+            }
+            set
+            {
+                profit += value;
+            }
+        }
+        private int fines;
+        public int Fines
+        {
+            get
+            {
+                return fines;
+            }
+            set
+            {
+                fines += value;
+            }
+        }
+        private int lostClients;
+        public int LostClients
+        {
+            get
+            {
+                return lostClients;
+            }
+            set
+            {
+                lostClients = value;
+            }
+        }
+        private int conscificatedCars;
+        public int ConscificatedCars
+        {
+            get
+            {
+                return conscificatedCars;
+            }
+            set
+            {
+                conscificatedCars = value;
             }
         }
 

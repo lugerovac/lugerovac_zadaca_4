@@ -29,7 +29,7 @@ namespace lugerovac_zadaca_4
         public Automobile GiveFreeCar()
         {
             Randomizer rnd = Randomizer.GetInstance();
-            int random = rnd.GetValue(0, numberOfCars - 1);
+            int random = rnd.GetValue(0, numberOfCars);
             int i = random;
             int limit = random - 1;
             if (limit < 0)
@@ -52,6 +52,14 @@ namespace lugerovac_zadaca_4
             }
 
             return null;
+        }
+
+        public List<Automobile> GiveCarList()
+        {
+            List<Automobile> returnValue = new List<Automobile>();
+            foreach (Automobile car in cars)
+                returnValue.Add(car);
+            return returnValue;
         }
     }
 }

@@ -29,7 +29,7 @@ namespace lugerovac_zadaca_4
 
                 Parking parking = Parking.GetInstance();
                 Zone[] AvailableZones = parking.GetParkingZones();
-                int rnd2 = rnd.GetValue(0, AvailableZones.Length - 1);
+                int rnd2 = rnd.GetValue(0, AvailableZones.Length);
                 int chosenZone = rnd2;
                 bool reserved = parking.ReservePlaceInZone(car, AvailableZones[chosenZone]);
                 if (reserved)
